@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+.ticker-wrap {
+  width: 100%;
+  max-width: 680px;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+}
+.ticker-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px 8px;
+  border-bottom: 1px solid #e5e5e5;
+}
+.ticker-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #639922;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.ticker-label {
+  font-size: 12px;
+  color: #888;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+.ticker-body {
+  height: 180px;
+  overflow: hidden;
+  position: relative;
+  padding: 8px 0;
+}
+.ticker-track {
+  display: flex;
+  flex-direction: column;
+  animation: scroll-up 18s linear infinite;
+}
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+@keyframes scroll-up {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+.ticker-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 16px;
+  min-height: 44px;
+}
+.ticker-item-icon {
+  font-size: 16px;
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+.ticker-item-text {
+  font-size: 14px;
+  color: #1a1a1a;
+  line-height: 1.5;
+  font-weight: 500;
+}
+.ticker-item-sub {
+  font-size: 12px;
+  color: #888;
+  margin-top: 2px;
+}
+.ticker-footer {
+  padding: 6px 16px;
+  border-top: 1px solid #e5e5e5;
+  font-size: 11px;
+  color: #bbb;
+  text-align: right;
+}
+</style>
+</head>
+<body>
+<div class="ticker-wrap">
+  <div class="ticker-header">
+    <div class="ticker-dot"></div>
+    <span class="ticker-label">SQLD 합격 동기부여 — 실시간</span>
+  </div>
+  <div class="ticker-body">
+    <div class="ticker-track" id="track"></div>
+  </div>
+  <div class="ticker-footer">마우스를 올리면 멈춰요</div>
+</div>
+<script>
+const items = [
+  { icon: "📅", text: "시험까지 D-109일", sub: "오늘 하루도 한 걸음씩!" },
+  { icon: "🧠", text: "에빙하우스 법칙", sub: "공부 후 1일 내 복습하면 67% 더 기억해요" },
+  { icon: "📖", text: "1단계 기초 다지기 진행 중", sub: "5월 6일 ~ 6월 15일 · 이론 위주" },
+  { icon: "⭐", text: "오늘 모르는 단어는 바로 플래시카드에!", sub: "python add_flashcard.py 로 저장하세요" },
+  { icon: "❌", text: "틀린 문제는 반드시 오답 노트에", sub: "같은 실수를 두 번 하지 않아요" },
+  { icon: "🔁", text: "복습은 1일 → 3일 → 7일 → 30일 후", sub: "에빙하우스 망각곡선 기반 복습 시스템" },
+  { icon: "💻", text: "SQL은 직접 써봐야 외워져요", sub: "SQL 실습 DB에 오늘 배운 문법 기록하기" },
+  { icon: "🎯", text: "SQLD 합격 기준: 60점 이상", sub: "1과목 40% + 2과목 40% 과락 주의!" },
+  { icon: "📝", text: "기출문제 위주로 공부하면 합격률 UP", sub: "문제풀이 DB에 오늘 푼 문제 기록하기" },
+  { icon: "🏆", text: "포기하지 않으면 반드시 합격해요", sub: "오늘도 화이팅! 💪" },
+];
+const track = document.getElementById('track');
+const doubled = [...items, ...items];
+doubled.forEach(item => {
+  const div = document.createElement('div');
+  div.className = 'ticker-item';
+  div.innerHTML = `
+    <span class="ticker-item-icon">${item.icon}</span>
+    <div>
+      <div class="ticker-item-text">${item.text}</div>
+      <div class="ticker-item-sub">${item.sub}</div>
+    </div>
+  `;
+  track.appendChild(div);
+});
+</script>
+</body>
+</html>
