@@ -5,7 +5,26 @@ from datetime import date
 from dotenv import load_dotenv
 
 load_dotenv()
-KAKAO_ACCESS_TOKEN = os.getenv("KAKAO_ACCESS_TOKEN")
+KAKAO_REST_API_KEY  = os.getenv("KAKAO_REST_API_KEY")
+KAKAO_REFRESH_TOKEN = os.getenv("KAKAO_REFRESH_TOKEN")
+
+def get_fresh_token():
+    res = requests.post(
+        "https://kauth.kakao.com/oauth/token",
+        data={
+            "grant_type":    "refresh_token",
+            "client_id":     KAKAO_REST_API_KEY,
+            "refresh_token": KAKAO_REFRESH_TOKEN,
+        }
+    )
+    data = res.json()
+    if "access_token" in data:
+        print("✅ 토큰 자동 갱신 완료")
+        return data["access_token"]
+    print("⚠️ 토큰 갱신 실패, 기존 토큰 사용")
+    return os.getenv("KAKAO_ACCESS_TOKEN")
+
+KAKAO_ACCESS_TOKEN = get_fresh_token()
 
 today = date.today()
 stage1_end = date(2026, 6, 15)
