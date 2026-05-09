@@ -2,10 +2,10 @@ name: SQLD 영어단어 카카오톡 발송
 
 on:
   schedule:
-    - cron: '0 22 * * *'
-    - cron: '0 4 * * *'
-    - cron: '0 10 * * *'
-  workflow_dispatch:
+    - cron: '0 22 * * *'   # 오전 7시 KST (UTC+9)
+    - cron: '0 4 * * *'    # 오후 1시 KST
+    - cron: '0 10 * * *'   # 오후 7시 KST
+  workflow_dispatch:        # 수동 실행 가능
 
 jobs:
   send-english:
@@ -13,12 +13,15 @@ jobs:
     steps:
       - name: 코드 체크아웃
         uses: actions/checkout@v4
+
       - name: Python 설정
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+
       - name: 패키지 설치
         run: pip install requests python-dotenv
+
       - name: 영어단어 발송
         env:
           KAKAO_REST_API_KEY: ${{ secrets.KAKAO_REST_API_KEY }}
